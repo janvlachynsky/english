@@ -2,7 +2,7 @@
 <div class="uk-section uk-section-secondary uk-text-center" style="padding-top:20px;">
 	<?php echo validation_errors(); ?>
 	
-	<form id="form_check" action="" method="post">
+	<form id="form_check" action="<?=base_url("page/result")?>" method="post">
 	<script> var time_start=$.now()+12000;</script>
 	<?php $session_id=$this->session->userdata();
 	?>
@@ -23,7 +23,8 @@
 		<div class="uk-padding-small animated fadeIn delay-1s">	
 			<input style="height:40px; font-size:20pt; text-align: center;" id="answer"  type="text" name="answer" placeholder="Enter your answer..." autofocus autocomplete="off">
 		</div>
-		<input id="show-result" class="uk-button uk-button-primary" style="display:none;"type="button" name="check" value="Show result">
+		<input type="hidden" name="result-data" id="result-data">
+		<input id="show-result" class="uk-button uk-button-primary" style="display:none;" type="submit" name="check" value="Show result">
 		<input id="reset" class="uk-button uk-button-secondary animated fadeIn delay-1s" style="display:none;"type="button" name="check" value="Reset">
 		<input id="submit" class="uk-button uk-button-primary animated fadeIn delay-1s" type="button" name="check" value="check">
 		<input id="next" class="uk-button uk-button-danger animated fadeIn delay-1s" type="button" name="next" value="next">
@@ -74,7 +75,7 @@
       });
 
       $('#submit').click(function(){
-        console.log("sdgsdvxc");
+
         var answer_time = time_start - $.now();
         if(answer_time<=100){
           answer_time=100;
@@ -96,7 +97,7 @@
         $.ajax({
           type:'POST',
           data:{answer: answer, id: id, number: number, vocabulary: vocabulary, count:count, langto:langto,langfrom:langfrom, rating:rating, score:score, answer_time:answer_time},
-          url:'/english/index.php/page/check',
+          url:'<?=base_url("page/check");?>',
           error: function(xhr, error,thrownerr){
             console.log("xhr: "+xhr.status+" error: "+error+" ThrownError: "+thrownerr);
           },
@@ -145,7 +146,7 @@
         });
       });
       $('#next').click(function(){
-        console.log('slsdflk');
+ 
         var vocabulary = <?=json_encode($vocabulary);?>;
         var question = $('#question').attr('number');
         var range = "<?= $this->range;?>";
@@ -181,8 +182,11 @@
               $('#submit').prop('disabled',true).hide();
               $('#next').remove();
               $('#show-result').show();
+              var results = btoa(localStorage.getItem('test'));
+              $("#result-data").attr('value',results);
+              	console.log(results);
               $('#reset').show();
-              console.log('end');
+            
               console.log(progress);
 
               localStorage.setItem('test', JSON.stringify(progress));
@@ -194,8 +198,14 @@
       });
 
 
-      $('#show-result').click(function(){
+      $('#show-result1').click(function(){
         var results = JSON.parse(localStorage.getItem('test'));
+        $.ajax({
+        	type:'POST',
+        	data: {results: results},
+        	url:"<?php echo base_url('page/result'); ?>",
+        	success: function(res){}
+        })
         console.log(results[0]['word']);
         console.log($('#result-modal .content table').length + " - modal length");
         $('#result-modal').show();

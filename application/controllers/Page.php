@@ -216,5 +216,42 @@ class Page extends CI_Controller
 	public function findVocab($vocab){
 
 	}
+
+	public function result(){
+		$result = json_decode(base64_decode($this->input->post('result-data')),true);
+
+		//print_r($result);
+
+		 $vocabs = json_decode($this->session->get_userdata()['vocabs_encoded'],true);
+		 //print_r($vocabs);
+
+
+		 foreach ($vocabs as $key => $value) {
+		 
+		 	foreach ($result as $k2 => $res){
+
+		 		if(!empty($res) && $value['id']==$res['id']){
+		 			$vocabs[$key]['count'] = $res['count'];
+		 			$vocabs[$key]['booleanresult'] = $res['booleanresult'];
+		 			$vocabs[$key]['score'] = $res['score'];
+		 			$vocabs[$key]['result'] = $res['result'];
+		 			$vocabs[$key]['answer'] = $res['word'];
+		 			continue 2;
+		 		}else{
+		 			$vocabs[$key]['count'] = 0;
+		 			$vocabs[$key]['booleanresult'] = 0;
+		 			$vocabs[$key]['score'] =0;
+		 			$vocabs[$key]['result'] = "Empty";
+		 			$vocabs[$key]['answer'] = "";
+		 		}	
+		 	}
+		 }
+		$data = array('vocabs'=>$vocabs);
+		 $data['title']='Test results';
+			$this->load->view('templates/header',$data);
+        $this->load->view('pages/result',$data);	
+        	$this->load->view('templates/footer',$data);		
+
+	}
 }
 
