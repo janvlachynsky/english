@@ -1,0 +1,18 @@
+Thrash
+
+# --------------
+# Please enter the commit message for your changes. Everything below
+# this paragraph is ignored, and an empty message aborts the commit.
+# Just close the window to accept your message.
+diff --git a/test.php.jpg b/test.php.jpg
+deleted file mode 100644
+index 06ef81d..0000000
+--- a/test.php.jpg
++++ /dev/null
+@@ -1,5 +0,0 @@
+-<?php 
+-<script>
+-alert('hell o bitch');
+-</script>
+-?>
+\ No newline at end of file
