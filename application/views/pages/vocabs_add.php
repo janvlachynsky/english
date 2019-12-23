@@ -2,7 +2,7 @@
 	<div class="uk-grid uk-child-width-1-2@m uk-child-width-1-1">
 		<div class="uk-card uk-card-primary uk-padding">
 			<h3>Manual</h3>
-			<form method="post" action="page/vocabsadd">
+			<form id="manual" method="post" action="upload/vocabsadd">
 				<div class="uk-margin">
 					<label class="uk-form-label" for="form-horizontal-text">To file</label>
 					<div class="uk-form-controls  uk-child-width-1-1" uk-grid>
@@ -74,12 +74,12 @@
 
 <script type="text/javascript">
 	$('select').on('change',function(){
-		console.log($(this).find(':selected').val());
+		
 		if($(this).find(':selected').val() == "new_file"){
-			$('#newfile').toggleClass('uk-hidden');
+			$('#newfile').removeClass('uk-hidden');
 		}else{
 
-			$('#newfile').toggleClass('uk-hidden');
+			$('#newfile').addClass('uk-hidden');
 			$('#newfile').find('input').html();
 		}
 	});
@@ -113,5 +113,25 @@
 
 		});
 	});
-
+	$('#manual').on('submit', function(e){
+		e.preventDefault();
+		var czech = $('#manual input[name="czech"]').val();
+		var english = $('#manual input[name="english"]').val();
+		var source = $('select').find(':selected').val();
+		if (source == "new_file"){
+			source = $('input [name="new_file_name"]').val();
+		}
+		$.ajax({
+			type:'POST',
+			data:{czech: czech, english:english, source : source},
+			url:'<?php echo base_url('upload/addVocabs'); ?>',
+			error:function(xhr, error,thrownerr){
+        		console.log("xhr: "+xhr.status+" error: "+error+" ThrownError: "+thrownerr);
+ 			},
+ 			success:function(result){
+ 				console.log(result);
+ 				alert("ok");
+ 			}
+		})
+	});
 </script>

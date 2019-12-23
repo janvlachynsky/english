@@ -6,6 +6,7 @@ class Upload extends CI_Controller {
         {
                 parent::__construct();
                 $this->load->helper(array('form', 'url'));
+                 $this->load->model('vocabulary_model');
         }
 
         public function index()
@@ -36,6 +37,23 @@ class Upload extends CI_Controller {
                         $this->load->view('upload_success', $data);
                 }
         }
+
+        public function  addVocabs():bool{
+
+       
+        
+            $czech = $this->input->post("czech");
+
+            $english = $this->input->post("english");
+            $source = $this->input->post("source");
+            $wordArray = array('czech' => $czech, 'english' => $english, 'source' => $source );
+
+            $this->vocabulary_model->addVocab($wordArray);
+             return true;
+
+            
+    }
+
 
     }
 

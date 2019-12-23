@@ -19,7 +19,7 @@
 		<h1 id="h1" class='uk-heading-primary uk-text-uppercase uk-text-center' name="firstWord"><?= $vocabulary[$number][$this->langfrom];?></h1>
 		<div class="shadow">
 		</div>
-		<input id="question" type="hidden" name="question" number="<?= $number ?>" value="<?= $vocabulary[$number]['id']?>" rating="<?= $vocabulary[$number]['rating']?>"" count="0">
+		<input id="question" type="hidden" name="question" number="<?= $number ?>" value="<?= $vocabulary[$number]['id']?>" rating="<?= $vocabulary[$number]['rating']?>" count="0">
 		<div class="uk-padding-small animated fadeIn delay-1s">	
 			<input style="height:40px; font-size:20pt; text-align: center;" id="answer"  type="text" name="answer" placeholder="Enter your answer..." autofocus autocomplete="off">
 		</div>

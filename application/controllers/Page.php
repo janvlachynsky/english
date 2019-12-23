@@ -107,7 +107,7 @@ class Page extends CI_Controller
 
 		$count++;
 		$rating++;
-
+		$vocabs_session = json_decode($this->session->get_userdata()['vocabs_encoded'],true);
 		$almost=levenshtein(convert_accented_characters($vocabulary[$number][$langto]), $input);
 		$tolerance=ceil(strlen(convert_accented_characters($vocabulary[$number][$langto]))*0.25);
 		$check = array("word"=>$vocabulary[$number][$langto],"id"=>$id, "count"=>$count, "rating"=>$rating);
@@ -148,7 +148,9 @@ class Page extends CI_Controller
 					$check["score"]=$score;	
 				}
 		}
+
 		//$this->vocabulary_model->set_rating($id,$rating);
+
 	 echo json_encode($check);
 	}
 
@@ -190,10 +192,7 @@ class Page extends CI_Controller
 		fclose($myfile);
 		$this->uploadToDB($allWords);
 	}
-	public function  vocabsadd(){
-		print_r("hihi");die();
-	}
-
+	
 	public function verify(){
 		$verified=array();
 		$verified['arr']=array();

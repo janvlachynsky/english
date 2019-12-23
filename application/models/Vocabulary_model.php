@@ -44,6 +44,13 @@ class Vocabulary_model extends CI_Model{
 		die();
 		return $query->result_array();
 	}
+
+	public function addVocab($vocabArray){
+
+	 $this->db->insert('vocabulary',$vocabArray);
+		return true;
+	}
+
 	
 
 	/*$file= APPPATH."slovickaPAAO2_test1.txt";
